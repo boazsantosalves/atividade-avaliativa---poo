@@ -1,0 +1,210 @@
+import java.util.Scanner;
+
+class Candidato{
+  private String nome;
+  private String partido;
+  private int votos;
+
+
+  public Candidato(String nome, String partido, int votos){
+    this.nome = nome;
+    this.partido = partido;
+    this.votos = votos;
+  }
+
+  public String getNome(){
+    return nome;
+  }
+
+  public void setNome(String nome){
+    this.nome = nome;
+  }
+
+  public String getPartido(){
+    return partido;
+  }
+
+  public void setPartido(String partido){
+    this.partido = partido;
+  }
+
+  public int getVotos(){
+    return votos;
+  }
+
+  public void setVotos(int votos){
+    this.votos = votos;
+
+  }
+
+  public void adcVotos(){
+    votos = votos+1;
+  }
+
+}
+
+class Urna{
+  
+  private Candidato cand1;
+  private Candidato cand2;
+  private int tvbrancos, tgvotos;
+
+  public Urna( Candidato cand1, Candidato cand2, int tvbrancos, int tgvotos){
+    this.cand1 = cand1;
+    this.cand2 = cand2;
+    this.tvbrancos = tvbrancos;
+    this.tgvotos = tgvotos;
+
+  }
+
+
+
+  public void votar(){
+    System.out.println("--------------------------------------------------");
+    System.out.println("");
+    System.out.println("♦ Digite o número 1 para votar no candidato "+cand1.getNome());
+    System.out.println("");
+
+    System.out.println("♦ Digite o número 2 para votar no candidato "+cand2.getNome());
+    System.out.println("");
+
+    System.out.println("♦ Digite 3 para votar branco");
+    System.out.println("");
+
+    System.out.println("♦ Digite o número 0 para encerrar a votação");
+    System.out.println("");
+    System.out.println("--------------------------------------------------");
+    System.out.println("");
+
+    Scanner teclado = new Scanner(System.in);/*criando o objeto teclado com o scanner que foi importado anteriormente*/
+    int i = 1;
+
+    while(i!=0){
+      int voto = teclado.nextInt();/*lendo o valor e armazenando em voto*/
+      if (voto==1){
+        cand1.adcVotos();
+        tgvotos = tgvotos+1;
+      }
+      else if(voto==2){
+        cand2.adcVotos();
+        tgvotos = tgvotos+1;
+      }
+      else if (voto==0){
+        /*não entra mais no while: acaba a votação*/
+        System.out.println("Você digitou o número zero, encerrou a votação"); 
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+
+        break;      
+      }
+
+      else{
+        tgvotos = tgvotos+1; /*Se for nulo ele também contabiliza*/
+        tvbrancos = tvbrancos +1; /*Se não for nem 1,2 ou 0, ele conta como branco*/
+
+      }
+
+      System.out.println("Obrigado pela participação ♥");
+      System.out.println("");
+      System.out.println("");
+      System.out.println("");
+      System.out.println("     Digite novamente     ");
+
+
+    }
+    
+
+
+
+
+
+  }
+
+  public void ExibirTVotos(){
+    System.out.println("");
+    System.out.println("O total geral de votos foi: " + tgvotos);
+
+
+
+  }
+
+  public void ExibirBrancos(){
+    System.out.println("");
+    System.out.println("O total de votos brancos/nulos foi: " + tvbrancos);
+
+
+  }
+
+  public void ExibirVotosCand(){
+    System.out.println("");
+    System.out.println(cand1.getNome() + " obteve " + cand1.getVotos() + " voto(s)");
+
+    System.out.println("");
+    System.out.println(cand2.getNome() + " obteve " + cand2.getVotos() + " voto(s)");
+
+
+
+  }
+
+  public void ExibirVencedor(){
+    if (cand1.getVotos() > cand2.getVotos()){
+      System.out.println(" ");
+      System.out.println(cand1.getNome() + " foi o vencedoooor!");
+      
+    }
+
+    else if (cand2.getVotos() > cand1.getVotos()){
+      System.out.println(" ");
+      System.out.println(cand2.getNome() + " foi o vencedor!");
+
+    }
+
+    else{
+      System.out.println(" ");
+      System.out.println("Houve um empate!");
+    }
+
+  }
+
+  public void ExibirNome(){ /*Apenas para organização*/
+    System.out.println(" ");
+    System.out.println(" ");
+    System.out.println("O nome do candidato 1 é: " + cand1.getNome());
+    
+    System.out.println(" ");
+    
+    System.out.println("O nome do candidato 2 é: " + cand2.getNome());
+   
+
+
+  }
+
+}
+
+class Main{
+  public static void main(String[] args){
+    Candidato cand1 = new Candidato("José", " partido da felicidade", 0);
+
+    Candidato cand2 = new Candidato("João", "partido da esperança", 0);
+
+    Urna urna = new Urna(cand1, cand2, 0, 0);
+    urna.ExibirNome();
+    System.out.println("");
+
+    urna.votar();
+
+    System.out.println(" ");
+    System.out.println("-------DADOS DA VOTAÇÃO-------");
+    urna.ExibirTVotos();
+    urna.ExibirBrancos();
+    urna.ExibirVotosCand();
+    urna.ExibirVencedor();
+
+
+
+
+  }
+
+  
+}
